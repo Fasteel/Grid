@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
 fun GridApp(modifier: Modifier = Modifier) {
     val window = (LocalView.current.context as Activity).window
     window.statusBarColor = MaterialTheme.colorScheme.primary.toArgb()
-    
+
     LazyVerticalGrid(
         modifier = modifier.safeDrawingPadding(),
         columns = GridCells.FixedSize(200.dp),
@@ -66,38 +67,40 @@ fun GridApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
-    Row(
+    Card(
         modifier = modifier
             .padding(8.dp)
             .height(68.dp)
             .clip(shape = RoundedCornerShape(20.dp))
             .background(MaterialTheme.colorScheme.secondaryContainer)
     ) {
-        Image(
-            modifier = modifier
-                .fillMaxHeight()
-                .width(68.dp),
-            painter = painterResource(topic.icon),
-            contentDescription = stringResource(topic.name)
-        )
-        Column(modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)) {
-            Text(
-                text = stringResource(topic.name),
-                modifier = modifier.padding(0.dp, 16.dp, 16.dp, 8.dp),
-                color = Color(0xFF48454e),
-                style = MaterialTheme.typography.bodyMedium
+        Row {
+            Image(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .width(68.dp),
+                painter = painterResource(topic.icon),
+                contentDescription = stringResource(topic.name)
             )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(R.drawable.ic_grain),
-                    contentDescription = stringResource(R.string.grain),
-                )
+            Column(modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)) {
                 Text(
-                    text = topic.count.toString(),
+                    text = stringResource(topic.name),
+                    modifier = modifier.padding(0.dp, 16.dp, 16.dp, 8.dp),
                     color = Color(0xFF48454e),
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
+                    style = MaterialTheme.typography.bodyMedium
                 )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_grain),
+                        contentDescription = stringResource(R.string.grain),
+                    )
+                    Text(
+                        text = topic.count.toString(),
+                        color = Color(0xFF48454e),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
+                    )
+                }
             }
         }
     }
@@ -107,9 +110,6 @@ fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
 @Preview
 fun GridAppItemPreview() {
     GridTheme {
-        Row {
-            GridAppItem(topic = Topic(R.string.architecture, 58, R.drawable.architecture))
-            GridAppItem(topic = Topic(R.string.crafts, 121, R.drawable.crafts))
-        }
+        GridAppItem(topic = Topic(R.string.architecture, 58, R.drawable.architecture))
     }
 }
