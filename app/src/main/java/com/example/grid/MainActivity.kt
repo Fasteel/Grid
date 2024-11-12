@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,7 +70,7 @@ fun GridApp(modifier: Modifier = Modifier) {
 fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .padding(8.dp)
+            .padding(dimensionResource(R.dimen.padding_small))
             .height(68.dp)
             .clip(shape = RoundedCornerShape(20.dp))
             .background(MaterialTheme.colorScheme.secondaryContainer)
@@ -82,10 +83,16 @@ fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
                 painter = painterResource(topic.icon),
                 contentDescription = stringResource(topic.name)
             )
-            Column(modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)) {
+            Column(
+                modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium))
+            ) {
                 Text(
                     text = stringResource(topic.name),
-                    modifier = modifier.padding(0.dp, 16.dp, 16.dp, 8.dp),
+                    modifier = modifier.padding(
+                        top = dimensionResource(R.dimen.padding_medium),
+                        end = dimensionResource(R.dimen.padding_medium),
+                        bottom = dimensionResource(R.dimen.padding_small)
+                    ),
                     color = Color(0xFF48454e),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -98,7 +105,7 @@ fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
                         text = topic.count.toString(),
                         color = Color(0xFF48454e),
                         style = MaterialTheme.typography.labelMedium,
-                        modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
+                        modifier = modifier.padding(start = dimensionResource(R.dimen.padding_small))
                     )
                 }
             }
