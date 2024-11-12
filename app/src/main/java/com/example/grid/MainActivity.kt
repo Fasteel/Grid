@@ -7,16 +7,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,25 +52,25 @@ class MainActivity : ComponentActivity() {
 fun GridApp(modifier: Modifier = Modifier) {
     val window = (LocalView.current.context as Activity).window
     window.statusBarColor = MaterialTheme.colorScheme.primary.toArgb()
-
-    LazyColumn(modifier = modifier.safeDrawingPadding()) {
-        items(Datasource.topics.chunked(2) + Datasource.topics.chunked(2)) {
-            Row {
-                GridAppItem(topic = it[0])
-                GridAppItem(topic = it[1])
-            }
+    
+    LazyVerticalGrid(
+        modifier = modifier.safeDrawingPadding(),
+        columns = GridCells.FixedSize(200.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        items(Datasource.topics + Datasource.topics) {
+            GridAppItem(topic = it)
         }
     }
 }
 
 @Composable
-fun RowScope.GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
+fun GridAppItem(topic: Topic, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(8.dp)
             .height(68.dp)
             .clip(shape = RoundedCornerShape(20.dp))
-            .weight(1f)
             .background(MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Image(
